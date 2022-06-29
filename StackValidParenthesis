@@ -1,0 +1,20 @@
+def isValid(s: str) -> bool:
+    myDict = {'(': ')', '{': '}', '[': ']'}
+    maps = []
+
+    if len(s) % 2 != 0:
+        return False
+
+    for char in s:
+        if char in myDict:
+            maps.append(char)
+        else:
+            if(len(maps) != 0 and char == myDict[maps[-1]]):
+                maps.pop()
+            else:
+                return False
+    return (len(maps) == 0)
+
+s = "()[]{}"
+
+print(isValid(s))
