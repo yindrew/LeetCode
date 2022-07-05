@@ -1,16 +1,49 @@
-
-height = [2,3,10,5,7,8,9]
-
-def maxArea(height):
-    tot, l, r = 0, 0, len(height) - 1
-
-    while(l < r):
-        tot = max(tot, min(height[l], height[r]) * (r - l))
-        if height[l] < height[r]:
-            l += 1
-        else:
-            r-+= 1
-    return tot
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 
-maxArea(height)
+root = TreeNode(2)
+root.left = TreeNode(2)
+root.right = TreeNode(2)
+# root.left.left = TreeNode(2)
+# root.left.right = TreeNode(4)
+# root.right.left = TreeNode(6)
+# root.right.right = TreeNode(9)
+
+def isValidBST(root):
+    def valid(root, smallest, largest):
+        if not root:
+            return True
+        if root.val < smallest or root.val > largest:
+            return False
+        return (valid(root.left, smallest, root.val) and valid(root.right, root.val, largest))
+    
+    return valid(root, -100, 100)
+
+isValidBST(root)
+
+def isValidBST2(root):
+    arr = []
+    def inOrderSearch(root):
+        if not root:
+            return 
+        inOrderSearch(root.left)
+        arr.append(root.val)
+        inOrderSearch(root.right)
+
+    inOrderSearch(root)
+    for a in range(len(arr) - 2):
+        if (arr[a+1] >= arr[a]):
+            return False
+    return True
+
+
+
+
+
+isValidBST2(root)
+
+        
