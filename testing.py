@@ -1,24 +1,30 @@
-class TreeNode(object):
-     def __init__(self, val=0, left=None, right=None):
-         self.val = val
-         self.left = left
-         self.right = right
-         
-def buildTree(preorder, inorder):
-    if inorder:
-        index = inorder.index(preorder.pop(0))
-        root = TreeNode(inorder[index])
-        root.left = buildTree(preorder, inorder[:index])
-        root.right = buildTree(preorder, inorder[index+1:])
-        return root
+def search(nums, target):
+    if not nums:
+        return -1
 
-        
+    low, high = 0, len(nums) - 1
 
+    while low <= high:
+        mid = (low + high) // 2
+        if target == nums[mid]:
+            return mid
 
+        if nums[low] <= nums[mid]:
+            if nums[low] <= target <= nums[mid]:
+                high = mid - 1
+            else:
+                low = mid + 1
+        else:
+            if nums[mid] <= target <= nums[high]:
+                low = mid + 1
+            else:
+                high = mid - 1
 
-preorder = [3,9,20,15,7]
-inorder = [9,3,15,20,7]
+    return -1
 
+    
+# nums = [4,5,6,7,0,1,2]
+nums = [3, 4, 5, 6, 1, 2]
+target = 2
 
-
-buildTree(preorder, inorder).left.val
+search(nums, target)
