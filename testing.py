@@ -1,30 +1,19 @@
-def search(nums, target):
-    if not nums:
-        return -1
+digits = "23"
 
-    low, high = 0, len(nums) - 1
+phoneDict = {"2": ['a', 'b', 'c'], "3": ['d', 'e', 'f'], "4": ['g', 'h', 'i'], 
+             "5": ['j', 'k', 'l'], "6": ['m', 'n', 'o'], "7": ['p', 'q', 'r', 's'],
+             "8": ['t', 'u', 'v'], "9": ["w", "x", "y", "z"]}
 
-    while low <= high:
-        mid = (low + high) // 2
-        if target == nums[mid]:
-            return mid
+res = []
 
-        if nums[low] <= nums[mid]:
-            if nums[low] <= target <= nums[mid]:
-                high = mid - 1
-            else:
-                low = mid + 1
-        else:
-            if nums[mid] <= target <= nums[high]:
-                low = mid + 1
-            else:
-                high = mid - 1
+def dfs(cur, path):
+    if len(path) == len(digits):
+        res.append([path])
 
-    return -1
+    for i in cur:
+        dict = phoneDict[i]
+        for x in dict:
+            dfs(cur[i+1:], path + str(x))
 
-    
-# nums = [4,5,6,7,0,1,2]
-nums = [3, 4, 5, 6, 1, 2]
-target = 2
 
-search(nums, target)
+dfs(digits, "")
